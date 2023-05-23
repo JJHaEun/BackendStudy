@@ -1,8 +1,20 @@
 console.log("안녕!!!");
 
-const getToken = () => {
-  const result = String(Math.floor(Math.random() * 1000000)).padStart(6, "0"); // 6자리 랜덤 수 만들기(6자리이고 아니라면 앞에 0을 붙여줘(문자열에만 사용하는 것이기에 문자열로 바꿔서 진행.))
+// 디민 6자리의 토큰만 생성가능. 재사용필요!!
+
+const getToken = (length) => {
+  // 넘겨준 인자를 매개변수(파라미터 = param)로 받음.
+  const result = String(Math.floor(Math.random() * 10 ** length)).padStart(
+    length,
+    "0"
+  ); // 6자리 랜덤 수 만들기(6자리이고 아니라면 앞에 0을 붙여줘(문자열에만 사용하는 것이기에 문자열로 바꿔서 진행.))
   // Math.random => 랜덤한 소수나옴., 소수점 자리 옯겨서 6자리로 만들어주고 소수점 아래 버리기
   console.log(result);
 };
-getToken();
+getToken(6);
+// 2. 또는 전체 자리만 인자로 보내주고  곱하기 연산자를 이용.
+// 10 * 3 = 30
+// 10 ** 3 = 1000
+// 10 ** 4 = 10000 (곱하기 연산자는 제곱연산자!! 즉, 10 ** 4 === 10 * 10 * 10 * 10 = 10000)
+
+// getToken(1000000, 6); // 1. 함수를 실행시에 사용할 변수를 넘겨줌(인자 = arg)
