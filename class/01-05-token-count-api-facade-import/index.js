@@ -1,4 +1,5 @@
 import { checkValidationPhone, getToken, sendTokenToSMS } from "./phone";
+// require("./phone")
 
 // 이 함수가 메인함수. 여기서 checkValidationPhone이라는 함수를 실행. => 검증
 // 파샤드 페턴 사용

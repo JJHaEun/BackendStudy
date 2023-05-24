@@ -9,6 +9,18 @@ export const checkValidationPhone = (phoneNumber) => {
 
 export const getToken = (length) => {
   // 넘겨준 인자를 매개변수(파라미터 = param)로 받음.
+  // 2. 핸드폰 토큰 6자리 만들기
+  const length = 6;
+  if (length === undefined) {
+    console.log("개수를 입력해주세요");
+    return;
+  } else if (length <= 0) {
+    console.log("너무 적습니다");
+    return;
+  } else if (length > 10) {
+    console.log("개수가 너무 커요ㅜㅜ");
+    return;
+  } // return을 사용하여 조건에 맞을시 아래 코드가 실행되지 않게한다.
   const result = String(Math.floor(Math.random() * 10 ** length)).padStart(
     length,
     "0"
