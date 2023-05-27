@@ -21,7 +21,7 @@ export const getWelcomeTemplate = ({ name }) => {
               </body>
           <html>
           `;
-};
+}; // 함수를 실행하는 자리에 return 부분이 들어가게됨.
 
 export const sendTemplateEmail = (email, myTemplate) => {
   console.log(`${email}에 ${myTemplate}을 전송하였습니다`);

@@ -6,3 +6,4 @@ export const getToday = () => {
   const today = `${yyyy}-${mm}-${dd}`;
   return today;
 };
+// 함수를 실행하는 자리에 return 부분이 들어가게됨.

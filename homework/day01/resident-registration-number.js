@@ -21,9 +21,10 @@ export const InfoPersonNumberLength = (infoNum) => {
   const back = inFoSplit[1];
   if (front.length !== 6 || back.length !== 7) {
     console.log("에러 발생!!! 개수를 제대로 입력해 주세요!!!");
-    return;
+    return false;
   } else {
-    console.log(`${front}-${back[0]}******`);
+    const result = `${front}-${back[0]}******`;
+    console.log(result);
   }
 };
 //// ==========================================================
