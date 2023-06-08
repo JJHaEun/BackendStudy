@@ -38,13 +38,13 @@ export const sendTokenToSMS = async (number, myToken) => {
   // coolsms-node-sdk (소프트웨어 디벨롭 키트)라는 도구를 추가로 사용(국내용이기에 다운로드 수는 적음)
   const mysms = coolsms.default;
   const messageService = new mysms(
-    "NCSFSH8ALJN3RT9P",
-    "NYSKECOPOKBAEYVDQ6KXSPRSV82WGD2I"
+    process.env.SMS_KEY, // process.env => 환경변수에서 가지고 오겠다 라는 말
+    process.env.SMS_SECRET
   );
 
   const result = await messageService.sendOne({
     to: number, // 받는 사람 핸드폰 번호(실제 있는 번호로 넘겨줄것)
-    from: "01053067359", // 인증번호 보내는 핸드폰 번호
+    from: process.env.SMS_SEND_NUMBER, // 인증번호 보내는 핸드폰 번호
     text: `[테스트 인증] 요청하신 인증번호는 [${myToken}]입니다`,
   });
   // console.log(`${number} 번호로 인증번호 ${myToken}을 전송합니다!!!`);
