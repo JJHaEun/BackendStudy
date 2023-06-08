@@ -13,17 +13,46 @@ export const checkValidationEmail = (email) => {
 
 export const getWelcomeTemplate = ({ name }) => {
   const today = getToday();
+  // css를 줄 수 있는데, display:flex의 경우등 최근에 나온 문법들은 브라우저마다 차이가 있을 수 있다.
+  // display:flex를 주어 가운데 정렬이 되어야하는데, 네이버에서는 템플릿이 가운데 정렬이 되어 보이나,
+  // gmail에서는 그 속성이 먹지 않는 것을 볼 수 있다.
+  // 따라서 이메일로 보내는 템플릿 등 css를 줄 경우엔 옛날 기능들을 사용하도록한다.
+  // 실무에서는 템플릿 형태 다운받아서 다운로드 받은 html,css붙여넣어 사용하면 된다.
+  // return `
+  //         <html>
+  //             <body>
+  //                 <h1 style="border-bottom: 1px solid black; width: 100vw; text-align: center">${name}님 가입을 환영합니다!!!</h1>
+  //                     <div style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+  //                         <span>이름: ${name}</span>
+  //                         <span>가입일: ${today}</span>
+  //                     </div>
+  //             </body>
+  //         <html>
+  //         `;
   return `
-          <html>
-              <body>
-                  <h1 style="border-bottom: 1px solid black; width: 100vw; text-align: center">${name}님 가입을 환영합니다!!!</h1>
-                      <div style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
-                          <span>이름: ${name}</span>
-                          <span>가입일: ${today}</span>
-                      </div> 
-              </body>
-          <html>
-          `;
+  <html>
+  <body>
+  <table style="width: 100%">
+      <tbody>
+        <tr>
+          <td style="text-align: center; border-bottom: 1px solid black">
+            <h1>${name}님 가입을 환영합니다!!!</h1>
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align: center">
+            <div style="text-align: center">
+              <p>이름: ${name}</p>
+              <p>가입일: ${today}</p>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    </body>
+    </html>
+  
+  `;
 }; // 함수를 실행하는 자리에 return 부분이 들어가게됨.
 
 export const sendTemplateEmail = async (email, myTemplate) => {
