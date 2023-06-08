@@ -36,15 +36,20 @@ export const sendTokenToSMS = async (number, myToken) => {
   // NHN클라우드(유료- 좋긴하지만 신용카드가 있어야 사용가능), AWS등을 사용.
   //coolsms(선불 결제 필요. 처음에는 300원까지는 무료)=> 이것을 사용해 실습!!
   // coolsms-node-sdk (소프트웨어 디벨롭 키트)라는 도구를 추가로 사용(국내용이기에 다운로드 수는 적음)
+  const SMS_KEY = process.env.SMS_KEY;
+  const SMS_SECRET = process.env.SMS_SECRET;
+  const SMS_SENDER_NUMBER = process.env.SMS_SENDER_NUMBER;
+
+  // 초기 설정 -------------------------------
   const mysms = coolsms.default;
   const messageService = new mysms(
-    process.env.SMS_KEY, // process.env => 환경변수에서 가지고 오겠다 라는 말
-    process.env.SMS_SECRET
+    SMS_KEY, // process.env => 환경변수에서 가지고 오겠다 라는 말
+    SMS_SECRET
   );
-
+  // -----------------------------------------------
   const result = await messageService.sendOne({
     to: number, // 받는 사람 핸드폰 번호(실제 있는 번호로 넘겨줄것)
-    from: process.env.SMS_SEND_NUMBER, // 인증번호 보내는 핸드폰 번호
+    from: SMS_SENDER_NUMBER, // 인증번호 보내는 핸드폰 번호
     text: `[테스트 인증] 요청하신 인증번호는 [${myToken}]입니다`,
   });
   // console.log(`${number} 번호로 인증번호 ${myToken}을 전송합니다!!!`);

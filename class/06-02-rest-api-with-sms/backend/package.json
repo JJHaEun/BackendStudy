@@ -9,9 +9,10 @@
   },
   "dependencies": {
     "coolsms-node-sdk": "^2.0.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.1.4",
     "express": "^4.18.1",
     "swagger-jsdoc": "^6.2.1",
-    "swagger-ui-express": "^4.3.0",
-    "cors": "^2.8.5"
+    "swagger-ui-express": "^4.3.0"
   }
 }

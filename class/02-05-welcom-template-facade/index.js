@@ -3,7 +3,7 @@ import {
   getWelcomeTemplate,
   sendTemplateEmail,
 } from "./email.js";
-
+import "dotenv/config";
 // const name = "유리";
 // const createdAt = "2023-12-25";
 
