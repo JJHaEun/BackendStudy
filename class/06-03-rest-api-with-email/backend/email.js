@@ -67,6 +67,7 @@ export const sendTemplateEmail = async (email, myTemplate) => {
     },
   });
   const result = await transporter.sendMail({
+    // await가 없어도 전송은 되지만, 아래 콘솔은 찍히지 않음.
     to: email, // 전송받을 이메일 주소
     from: process.env.EMAIL_SENDER, // 인증메일을 전송할 메일(auth의 user와 동일. 다른것을 적어도 user이메일로 바뀜)
     subject: "[테스트 인증메일] 회원가입을 축하합니다!!", // 메일 제목

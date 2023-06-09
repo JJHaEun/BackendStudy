@@ -54,7 +54,5 @@ export const sendTokenToSMS = async (number, myToken) => {
     text: `[테스트 인증] 요청하신 인증번호는 [${myToken}]입니다`,
   });
   // console.log(`${number} 번호로 인증번호 ${myToken}을 전송합니다!!!`);
-  // NCSFSH8ALJN3RT9P; // KEY
   console.log(result);
-  // NYSKECOPOKBAEYVDQ6KXSPRSV82WGD2I; // SECRET
 };

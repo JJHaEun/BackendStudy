@@ -3,9 +3,15 @@ import swaggerUi from "swagger-ui-express";
 import swaggerJsdoc from "swagger-jsdoc";
 import cors from "cors";
 import { options } from "./swagger/config.js";
+import { checkValidationPhone, getToken, sendTokenToSMS } from "./phon.js";
+import {
+  checkValidationEmail,
+  getWelcomeTemplate,
+  sendTemplateEmail,
+} from "./email.js";
 
 const app = express();
-const port = 3000;
+const port = 3004;
 
 app.use(express.json());
 app.use(cors());
@@ -65,6 +71,31 @@ app.get("/starbucks", (req, res) => {
     { name: "오트라떼", kcal: 300 },
   ];
   res.send(resultCoffee);
+});
+
+app.post("/token/phone", (req, res) => {
+  const phoneNumber = req.body.phone;
+  const isValid = checkValidationPhone(phoneNumber);
+  if (isValid) {
+    const token = getToken(6);
+
+    sendTokenToSMS(phoneNumber, token);
+
+    res.send("인증 번호 전송 완료!");
+  }
+});
+
+app.post("/users", (req, res) => {
+  const user = req.body.user;
+  const isValid = checkValidationEmail(user.email);
+  if (isValid) {
+    // 2. 가입환영 템플릿 만들기
+    const myTemplate = getWelcomeTemplate(user);
+
+    // 3. 이메일에 가입환영 템플릿 전송하기
+    sendTemplateEmail(user.email, myTemplate);
+    res.send("가입완료!!!");
+  }
 });
 
 app.listen(port, () => {
