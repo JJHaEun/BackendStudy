@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>회원가입 연습하기</title>
+    <!-- axios를 설치를 해야하는데 
+        require로 불러와 사용하던, 
+        import로 불러와 사용하던 자바스크립트에서의 문법이기 때문에
+    html에서는 사용 불가. 따라서 자바스크립트가 있으면 해당 자바스크립트를 , 아니라면 CDNdmf qnffjdhk tkdyd
+    jsDelivr 가 가장 기본이고,
+    unpkg은 npm사이트에 잇는것들을 script태그로 다운로드 받고 싶을때 사용.
+    따라서 둘다 사용가능.(상관없음.)
+    unpkg.com 하면은 다른 라이브러리도 다운받을 수 있음.
+    -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <!--   다운로드 받게되면 브라우저 가장 최상위 window의 axios로 들어감(window.axios).
+    여기서 window는 생략가능.
+    (브라우저에서 실행할때의 최상위는 window. 
+    node에서 실행할 때의 최상위는 global
+    )
+    -->
+    <script>
+      const zzz = () => {
+        // 1. 입력한 휴대폰 번호 가져오기
+        const phoneNumber = document.getElementById("phone-input").value;
+        console.log(`나의 핸드폰 번호${phoneNumber}`);
+
+        // 2. 해당 휴대폰 번호로 인증번호 요청하기
+        // axios사용.
+        // 내가 설정해둔 포트번호와 엔드포인트주소를 입력
+        // postman에서 요청했던방식과 동일.(api를 참고하여 작성.)
+        axios
+          .post("http://localhost:3000/tokens/phone", {
+            phone: phoneNumber,
+            //   axios는 얘를 실행하고 바로 .then을 실행함. 여기에는 응답값이 들어감.
+          })
+          .then((res) => {
+            // api의  res.send("")여기에 적어준 값이 res에 들어가게됨
+            console.log(res);
+            document.getElementById("status").innerText = res.data;
+          });
+      };
+    </script>
+  </head>
+  <body>
+    휴대폰 번호: <input type="text" id="phone-input" />
+    <button onclick="zzz()">인증하기</button>
+    <div id="status">인증상태</div>
+    <button>회원가입하기</button>
+  </body>
+</html>
