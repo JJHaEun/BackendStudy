@@ -1,0 +1,15 @@
+version: "3.7"
+
+services:
+  homework-backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./index.js:/homeworkFD/index.js
+    ports:
+      - 3000:3004
+  homework-mongo:
+    image: mongo:5
+    ports:
+      - 27017:27017

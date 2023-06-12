@@ -11,7 +11,14 @@ services:
       context: .
       # 여기 넣을 도커파일이름
       dockerfile: Dockerfile
-      # 포트포워딩을 할 경우 포스트맨이나 브라우저 3000번 => 도커 backend로
+    # 현위치 index.js의 변경이 있을 경우에 docker안에 myfolder에 있는 index.js와 동기화 시켜줘
+    # 내컴퓨터:도커컴퓨터
+    volumes:
+      - ./index.js:/myfolder/index.js
+      - ./email.js:/myfolder/email.js
+    #   이렇게 파일 하나씩 넘길수도 있는데, 폴더 하나에 넣고 그 폴더를 통으로 넣어줄 수도 있다.
+
+    # 포트포워딩을 할 경우 포스트맨이나 브라우저 3000번 => 도커 backend로
     ports:
       - 3000:3000
   database-mongo:

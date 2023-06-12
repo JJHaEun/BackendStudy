@@ -23,8 +23,13 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerJsdoc(options))); /
 // localhost:3000/api-docs 이렇게 들어가면 api주소를 볼 수 있음.
 // 난 api!
 app.get("/boards", async (req, res) => {
+  console.log("aaaa");
   // 게시물 목록조회
-  // 1. 데이터를 조회하는 로직 => DB에 접속하여 데이터 꺼내오기
+  // 1. 데이터를 조회하는 로직 =>
+  // DB에 접속하여 데이터 꺼내오기
+
+  // Board라는 컬렉션에서 가지고온다.
+  const result = await Board.find();
   // const result = [
   //   {
   //     number: 1,
@@ -46,8 +51,6 @@ app.get("/boards", async (req, res) => {
   //   },
   // ];
 
-  // Board라는 컬렉션에서 가지고온다.
-  const result = await Board.find();
   // 2. 꺼내온 결과 응답 주기
   res.send(result);
 });
@@ -57,7 +60,9 @@ app.get("/boards", async (req, res) => {
 // 여기 이 함수를 미들웨어함수라고 함.
 app.post("/boards", async (req, res) => {
   console.log(req.body);
-  // 1. 데이터를 등록하는 로직 =>DB에 접속해 데이터 저장하기(프론트에서 입력한 데이터를 저장.)
+  // 1. 데이터를 등록하는 로직 =>
+  // DB에 접속해 데이터 저장하기(프론트에서 입력한 데이터를 저장.)
+
   // => 게시를 컬렉션 Board를 새롭게 만들고,
   const board = new Board({
     writer: req.body.writer,
