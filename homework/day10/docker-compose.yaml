@@ -1,0 +1,16 @@
+version: "3.7"
+
+services:
+  day10node:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./index.js:/day10Node/index.js
+      - ./phon.js:/day10Node/phon.js
+    ports:
+      - 3000:1004
+  day10mongoDB:
+    image: mongo:5
+    ports:
+      - 27017:27017
