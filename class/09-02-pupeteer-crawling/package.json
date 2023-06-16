@@ -1,0 +1,13 @@
+{
+  "name": "09-02-pupeteer-crawling",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon index.js"
+  },
+  "dependencies": {
+    "puppeteer": "^20.7.2"
+  }
+}
