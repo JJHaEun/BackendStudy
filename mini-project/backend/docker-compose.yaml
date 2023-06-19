@@ -1,0 +1,16 @@
+version: "3.7"
+
+services:
+  mini-node:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./index.js:/mini/index.js
+      - ./phon.js:/mini/phon.js
+    ports:
+      - 3000:3000
+  mini-mongoDB:
+    image: mongo:5
+    ports:
+      - 27017:27017
