@@ -1,15 +1,60 @@
 import mongoose from "mongoose";
 import cors from "cors";
 import express from "express";
-import { TokenInfo } from "./token.model.js";
 import { checkValidationPhone, getToken, sendTokenToSMS } from "./phon.js";
+import {
+  checkValidationEmail,
+  getWelcomeTemplate,
+  sendTemplateEmail,
+} from "./email.js";
+import { User } from "./models/user.model.js";
+import { maskPersonalNumber } from "./personal.js";
+import { TokenInfo } from "./models/token.model.js";
+import { preferSite } from "./cheerio.js";
 
 const app = express();
 const port = 3000;
-mongoose.connect("mongodb//mini-mongoDB/miniDockerPJ");
+//                            도커의 mongo컴퓨터 이름과 서버주소(즉, 몽고DB를 실행하는 컴퓨터와 서버주소)/그안의  DB이름
+//mongoose.connect("mongodb://database-mongo:27017/myproject-docker");
 app.use(express.json());
 app.use(cors());
+mongoose.connect("mongodb://mini-mongoDB/miniDockerPJ");
 
+app.post("/users", async (req, res) => {
+  // 회원가입하기
+  const user = req.body;
+  const isValid = checkValidationEmail(user.email);
+  if (isValid) {
+    // 2. 가입환영 템플릿 만들기
+    const myTemplate = getWelcomeTemplate(user);
+
+    // 3. 이메일에 가입환영 템플릿 전송하기
+    sendTemplateEmail(user.email, myTemplate);
+    // 주민번호 뒷자리 가리기
+    const personal = maskPersonalNumber(user.personal);
+
+    const tokens = await TokenInfo.find({ phone: user.phone });
+    if (!tokens || tokens.isAuth === false) {
+      return res
+        .status(422)
+        .json({ error: "에러!! 핸드폰 번호가 인증되지 않았습니다" });
+    }
+    // true라면 내가 좋아하는 사이트 cheerio사용해서 스크래핑
+    const preferCheerio = await preferSite(user.prefer);
+    console.log(preferCheerio);
+    const userInfo = new User({
+      name: user.name,
+      email: user.email,
+      personal: personal,
+      prefer: user.prefer,
+      pwd: user.pwd,
+      phone: user.phone,
+      og: preferCheerio,
+    });
+    await userInfo.save();
+    res.send(userInfo._id);
+  }
+});
 app.patch("/tokens/phone", async (req, res) => {
   const phoneNum = req.body.phone;
   const token = req.body.token;
