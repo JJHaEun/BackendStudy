@@ -55,6 +55,13 @@ app.post("/users", async (req, res) => {
     res.send(userInfo._id);
   }
 });
+
+app.get("/users", async (req, res) => {
+  const result = await User.find();
+
+  res.send(result);
+});
+
 app.patch("/tokens/phone", async (req, res) => {
   const phoneNum = req.body.phone;
   const token = req.body.token;
